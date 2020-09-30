@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @font-face {
+            /*1. 这个字体名称要注意 icomoon*/
+            font-family: 'icomoon';
+            /*2. 一定要注意路径的问题*/
+            src: url('./fonts/icomoon.eot?7kkyc2');
+            src: url('./fonts/icomoon.eot?7kkyc2#iefix') format('embedded-opentype'),
+                url('./fonts/icomoon.ttf?7kkyc2') format('truetype'),
+                url('./fonts/icomoon.woff?7kkyc2') format('woff'),
+                url('./fonts/icomoon.svg?7kkyc2#icomoon') format('svg');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        .change {
+            transition: all .5s;
+            transform: rotate(-180deg);
+
+        }
+
+        .change1 {
+            transition: all .5s;
+            /* transform: rotate(0deg)  */
+        }
+    </style>
+    <link rel="stylesheet" href="./map.css">
+</head>
+
+<body>
+    <div>
+        <img src="./img/bmap.png" alt="">
+        <!-- 右上角按钮 -->
+        <div class="right">
+            <div class="content">
+                平台用户需求调研
+            </div>
+        </div>
+
+        <!-- 疫情数据面板 -->
+        <!-- 累计确诊 -->
+        <div class="dataTable">
+            <div class="acc">
+                <span></span>
+            </div>
+            <div class="add">
+                <i>+</i>
+                <span></span>
+            </div>
+
+            <!-- 现有确诊 -->
+            <div class="acc current">
+                <span></span>
+            </div>
+            <div class="add currentAdd">
+                <i>+</i>
+                <span></span>
+            </div>
+
+            <!-- 累计死亡 -->
+
+            <div class="acc death">
+                <span></span>
+            </div>
+            <div class="add deathAdd">
+                <i>+</i>
+                <span></span>
+            </div>
+            <!-- 累计治愈 -->
+            <div class="acc cure">
+                <span></span>
+            </div>
+            <div class="add cureAdd">
+                <i>+</i>
+                <span></span>
+            </div>
+        </div>
+
+
+        <!-- 选择框 -->
+        <div class="selectCity">
+            <div class="input-content">
+                <!-- 用input框模拟选择框 -->
+                <input type="text" value="请选择">
+                <div class="box">
+                    <div class="group">
+                        <span>默认</span>
+                        <li>世界</li>
+                    </div>
+                </div>
+                <i></i>
+            </div>
+            <button></button>
+        </div>
+
+        <!-- 地图区 -->
+        <div id="map"></div>
+
+        <!-- 图表区 -->
+        <div id="charts-left"></div>
+        <div id="charts-right"></div>
+
+        <!-- 最新资讯 -->
+        <div class="source">
+            <!-- 选择框 -->
+            <div class="selectCity news">
+                <div class="input-content">
+                    <!-- 用input框模拟选择框 -->
+                    <input type="text">
+
+                </div>
+                <button></button>
+            </div>
+
+            <!-- 热门搜索 -->
+            <div class="tags">
+                <span>热门搜索</span>
+                <li>诈骗</li>
+                <li>诈骗</li>
+                <li>诈骗</li>
+                <li>诈骗</li>
+                <li>诈骗</li>
+            </div>
+
+            <div class="tabs">
+                <div class="btn">
+                    <li class="tabscurrent">官方要闻</li>
+                    <li>海外消息</li>
+                    <li>使馆信息</li>
+                </div>
+               <div class="item">
+                   <div class="tcontent">
+                       <p>疫情反弹 驻英使馆提醒中国公民加强防范措施</p>
+                       <p>中国新闻网</p>
+                       <p>中新网9月27日电 据中国驻英国大使馆微信公众号消息，近期英国新冠疫情强烈反弹，9月23、24、25日单日确诊病例均超过6000例。英国政府医学顾问警告，如不及时采取有效措施，10月中旬可能每天新增确诊5万例，死亡数百人。英国政府近期连续收紧防控举措，英格兰地区要求9月14日起禁止6人以上聚会，9月24日起酒吧、餐厅等只能营业至晚上10点，佩戴面罩范围扩大至零售业、出租车及酒店工作人员，违者将处以罚款等。 </p>
+                   </div>
+                   <div class="tcontent">
+                    <p>疫情反弹 驻英使馆提醒中国公民加强防范措施</p>
+                    <p>中国新闻网</p>
+                    <p>中新网9月27日电 据中国驻英国大使馆微信公众号消息，近期英国新冠疫情强烈反弹，9月23、24、25日单日确诊病例均超过6000例。英国政府医学顾问警告，如不及时采取有效措施，10月中旬可能每天新增确诊5万例，死亡数百人。英国政府近期连续收紧防控举措，英格兰地区要求9月14日起禁止6人以上聚会，9月24日起酒吧、餐厅等只能营业至晚上10点，佩戴面罩范围扩大至零售业、出租车及酒店工作人员，违者将处以罚款等。 </p>
+                </div>
+                <div class="tcontent">
+                    <p>疫情反弹 驻英使馆提醒中国公民加强防范措施</p>
+                    <p>中国新闻网</p>
+                    <p>中新网9月27日电 据中国驻英国大使馆微信公众号消息，近期英国新冠疫情强烈反弹，9月23、24、25日单日确诊病例均超过6000例。英国政府医学顾问警告，如不及时采取有效措施，10月中旬可能每天新增确诊5万例，死亡数百人。英国政府近期连续收紧防控举措，英格兰地区要求9月14日起禁止6人以上聚会，9月24日起酒吧、餐厅等只能营业至晚上10点，佩戴面罩范围扩大至零售业、出租车及酒店工作人员，违者将处以罚款等。 </p>
+                </div>
+                <div class="tcontent">
+                    <p>疫情反弹 驻英使馆提醒中国公民加强防范措施</p>
+                    <p>中国新闻网</p>
+                    <p>中新网9月27日电 据中国驻英国大使馆微信公众号消息，近期英国新冠疫情强烈反弹，9月23、24、25日单日确诊病例均超过6000例。英国政府医学顾问警告，如不及时采取有效措施，10月中旬可能每天新增确诊5万例，死亡数百人。英国政府近期连续收紧防控举措，英格兰地区要求9月14日起禁止6人以上聚会，9月24日起酒吧、餐厅等只能营业至晚上10点，佩戴面罩范围扩大至零售业、出租车及酒店工作人员，违者将处以罚款等。 </p>
+                </div>
+                <div class="tcontent">
+                    <p>疫情反弹 驻英使馆提醒中国公民加强防范措施</p>
+                    <p>中国新闻网</p>
+                    <p>中新网9月27日电 据中国驻英国大使馆微信公众号消息，近期英国新冠疫情强烈反弹，9月23、24、25日单日确诊病例均超过6000例。英国政府医学顾问警告，如不及时采取有效措施，10月中旬可能每天新增确诊5万例，死亡数百人。英国政府近期连续收紧防控举措，英格兰地区要求9月14日起禁止6人以上聚会，9月24日起酒吧、餐厅等只能营业至晚上10点，佩戴面罩范围扩大至零售业、出租车及酒店工作人员，违者将处以罚款等。 </p>
+                </div>
+               </div>
+               <!-- <div class="itemm">shi</div>  -->
+                <!-- <div class="itemm">ni</div> -->
+            </div>
+
+        </div>
+    </div>
+
+    <script src="./data.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- <script src="./e-charts.js"></script> -->
+    <!-- 面两行的意思是，浏览器从网络上获取echart包，而不需要你配置任何编程环境  -->
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/echarts.min.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/maps/world.js"></script>
+
+    <script>
+        var selectCity = document.querySelector('.selectCity')
+        var box = selectCity.querySelector('.box')
+        var ipt = selectCity.querySelector('input')
+        var group = selectCity.querySelector('.group')
+        var i = selectCity.querySelector('i')
+        var input_content = selectCity.querySelector('.input-content')
+        var flag = false;
+
+
+
+
+        // 初始状态，box隐藏
+        box.style.display = 'none'
+
+        // 请求数据
+        axios.defaults.baseURL = 'http://111.231.75.86:8000'
+        var continents = ['亚洲', '欧洲', '北美洲', '南美洲', '非洲', '大洋洲']
+        // 每个国家确诊数
+        var countryCount = []
+        continents.forEach(item => {
+            axios.get(`/api/countries/?continents=${item}`).then(function (res) {
+                console.log(res.data);
+                //    根据大洲，添加分组
+                var span = document.createElement('span')
+                span.innerHTML = `${res.data[0].continents}`
+                group.appendChild(span)
+
+                //    遍历响应的数组
+                res.data.forEach(item1 => {
+                    var obj = {}
+                    obj['cName'] = item1.countryName
+                    obj['value'] = item1.confirmedCount
+                    var a = item1.confirmedCount
+                    // 数据所属的颜色
+                    var colorArr = ['#fff', '#FFF1D0', '#FFD0A3', '#FF8A74', '#F04B4A', '#C51623', '#841710']
+                    obj['itemStyle'] = {}
+                    if (a === 0) {
+                        obj['itemStyle']['color'] = colorArr[0]
+                    } else if (a >= 0 && a < 100) {
+                        obj['itemStyle']['color'] = colorArr[1]
+                    } else if (a >= 100 && a < 1000) {
+                        obj['itemStyle']['color'] = colorArr[2]
+                    } else if (a >= 1000 && a < 10000) {
+                        obj['itemStyle']['color'] = colorArr[3]
+                    } else if (a >= 10000 && a < 100000) {
+                        obj['itemStyle']['color'] = colorArr[4]
+                    } else if (a >= 100000 && a < 1000000) {
+                        obj['itemStyle']['color'] = colorArr[5]
+                    } else {
+                        obj['itemStyle']['color'] = colorArr[6]
+                    }
+                    // 加入国家的英文名称
+                    var b = item1.countryName
+                    for (let key in nameMap) {
+                        if (nameMap[key] === b) {
+                            obj['name'] = key
+                        }
+                    }
+
+                    // 获取每个国家的确诊数据
+                    countryCount.push(obj)
+                    //    在大洲下，添加国家
+                    var li = document.createElement('li')
+                    li.innerHTML = `${item1.countryName}`
+                    span.appendChild(li)
+
+                    // 选择国家，下拉框隐藏，选中的值赋值给input框
+                    li.addEventListener('click', function () {
+                        box.style.display = 'none'
+                        ipt.value = li.innerHTML
+                    })
+                })
+            })
+        })
+        console.log(countryCount);
+        // 处理点击事件
+        window.onload = function () {
+            document.addEventListener('click', function () {
+                //    点击其他的元素，箭头回到初始状态，box盒子隐藏
+                flag = false
+                i.className = 'change1'
+                box.style.display = 'none'
+            })
+            // 点击input和box，阻止冒泡
+            input_content.addEventListener('click', function (event) {
+                event = event || window.event
+                // 避免document接收到该点击事件，使得box隐藏
+                event.stopPropagation()
+                // flag控制选择框箭头的旋转
+                if (!flag) {
+                    i.className = 'change'
+                    flag = true
+                    // 点击input框，显示下拉框
+                    box.style.display = 'block'
+                } else {
+                    i.className = 'change1'
+                    flag = false
+                    box.style.display = 'none'
+                }
+
+            })
+        }
+
+        // 渲染全球疫情数据面板
+        var dataTable = document.querySelector('.dataTable')
+        var items = dataTable.querySelectorAll('span')
+        var ii = dataTable.querySelectorAll('i')
+
+        axios.get(`/api/statistics/latest`).then(res => {
+            var count = res.data.globalStatistics
+            console.log(count);
+            var arr = [count.confirmedCount,
+            count.confirmedIncr, count.currentConfirmedCount,
+            count.currentConfirmedIncr, count.deadCount, count.deadIncr,
+            count.curedIncr, count.curedIncr]
+
+            for (let i = 0; i < items.length; i++) {
+                // 渲染数据
+                items[i].innerHTML = Math.abs(arr[i])
+                if ((arr[2 * i + 1] - 0) < 0) {
+                    ii[i].innerHTML = '-'
+                }
+            }
+            console.log(ii);
+        })
+
+        // 记录日期数组
+        const dateArr = []
+        const confirmData = []
+        const cureData = []
+        const deadData = []
+
+        async function getUsaData() {
+            const { data: res } = await axios.get(`/api/countries/USA/daily/`)
+            console.log(res);
+            // 美国近十日的疫情数据
+            var usaData = res.slice(239)
+            console.log(usaData);
+
+            usaData.forEach(item => {
+                confirmData.push(item.confirmedCount)
+                cureData.push(item.curedCount)
+                deadData.push(item.deadCount)
+                // 获取日期
+                var m = item.dateId.toString().substr(4, 2)
+                m = m.substr(0, 1) === '0' ? m.substr(1) : m
+                var d = item.dateId.toString().substr(6)
+                d = d.substr(0, 1) === '0' ? d.substr(1) : d
+                var str = `${m}-${d}`
+                dateArr.push(str)
+            })
+        }
+
+
+        getUsaData()
+        console.log(confirmData);
+        console.log(cureData);
+        console.log(deadData);
+
+        console.log(dateArr);
+
+
+        // console.log(option);
+        var timer = setTimeout(() => {
+            console.log(countryCount);
+            // 地图绘制
+            var option_map = {
+                tooltip: {
+                    "show": true,
+                    "trigger": "item",
+                    "triggerOn": "mousemove|click",
+                    "axisPointer": {
+                        "type": "line"
+                    },
+                    "textStyle": {
+                        "fontSize": 14
+                    },
+                    "borderWidth": 0,
+                    formatter: function (params) {
+                        // params不是series中的数据
+                        var res = params.name
+                        var sData = option_map.series[0].data
+
+                        // 提示框中的数据
+                        for (let i = 0; i < sData.length; i++) {
+                            if (sData[i]['name'] === params.name) {
+                                // params.color = sData[i].itemStyle['color']
+                                var value = (sData[i]['value'] + '').replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                                res = sData[i]['cName'] + ':' + value + '<br />'
+                            }
+                        }
+                        return res
+                    }
+                },
+                // 图例
+                dataRange: {
+                    x: 'left',
+                    y: 'bottom',
+                    splitList: [
+                        { start: 1000000 },
+                        { start: 100000, end: 999999 },
+                        { start: 10000, end: 99999 },
+                        { start: 1000, end: 9999 },
+                        { start: 100, end: 999, },
+                        { start: 1, end: 99, },
+                        { start: 0, end: 0 }
+                    ],
+                    color: ['#841710', '#C51623', '#F04B4A', '#FF8A74', '#FFD0A3', '#FFF1D0', '#fff'],
+                },
+                // color: ['#841710', '#C51623', '#F04B4A', '#FF8A74', '#FFD0A3', '#FFF1D0', '#fff'],
+                toolbox: {
+                    show: true,
+                    //orient: 'vertical',
+                    left: 'left',
+                    top: 'top',
+                },
+
+                series: [{
+                    type: "map",
+                    name: "全球疫情数据",
+                    label: {
+                        "show": false,
+                        "position": "top",
+                        "margin": 8,
+                    },
+                    mapType: "world",
+                    //countryCount中的name要与地图原始数据中的name对应
+                    //比如： 地图原始数据中的name为china，则获取的数据中的name也为china
+                    data: countryCount,
+
+                    "zoom": 1,
+                    itemStyle: {
+                        'color': '#841710'
+                    },
+                    emphasis: {
+                        label: {
+                            // 选中地图区域，是否显示名称
+                            show: true,
+                        },
+                    },
+                }]
+            }
+
+
+
+            var myMap = echarts.init(document.getElementById('map'), 'white', { renderer: 'canvas' })
+            myMap.setOption(option_map)
+            // 左边图表
+            option = {
+                title: {
+                    text: '美国疫情发展趋势',
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'cross',
+                        label: {
+                            backgroundColor: '#E9EEF3',
+                        },
+                    },
+                },
+                // legend: {
+                //     textStyle: {
+                //         fontSize: 12,
+                //     },
+
+                // },
+                toolbox: {
+                    show: true,
+
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: dateArr,
+                    axisLabel: {
+                        textStyle: {
+                            fontSize: 12,
+                        }
+                    },
+                },
+                yAxis: {
+                    type: 'value',
+                    show: true,
+                    axisLabel: {
+                        formatter: '{value} ',
+                        textStyle: {
+                            fontSize: 9,
+                        }
+                    },
+                    min: 50000,
+                    max: 8000000,
+                    interval: 1000000,
+                },
+                series: [
+                    {
+                        name: '确诊人数',
+                        type: 'line',
+                        // 由于请求数据，为异步，所以此时无法获取请求数据
+                        data: confirmData,
+                        itemStyle: {
+                            normal: {
+                                color: '#A31D13',
+                                lineStyle: {
+                                    color: '#A31D13',
+                                }
+                            }
+                        }
+                    },
+                    {
+                        name: '治愈人数',
+                        type: 'line',
+                        data: cureData,
+                        itemStyle: {
+                            normal: {
+                                color: '#31AC76',
+                                lineStyle: {
+                                    color: '#31AC76',
+                                }
+                            }
+                        }
+
+                    },
+                    {
+                        name: '死亡人数',
+                        type: 'line',
+                        data: deadData,
+                        itemStyle: {
+                            normal: {
+                                color: '#333333',
+                                lineStyle: {
+                                    color: '#333333',
+                                }
+                            }
+                        }
+                    }
+                ]
+            };
+
+            var mychart = echarts.init(document.getElementById('charts-left'))
+            mychart.setOption(option)
+
+            // 右边图表
+
+            var cureRate = []
+            var deadRate = []
+            for (let i = 0; i < confirmData.length; i++) {
+                cureRate[i] = (cureData[i] / confirmData[i]).toFixed(3)
+                deadRate[i] = (deadData[i] / confirmData[i]).toFixed(3)
+            }
+            option1 = {
+                title: {
+                    text: '美国疫情发展趋势',
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'cross',
+                        label: {
+                            backgroundColor: '#E9EEF3',
+                        },
+                    },
+                },
+                // 图例
+                // legend: {
+                //     textStyle: {
+                //         fontSize: 12,
+                //     },
+
+                // },
+                toolbox: {
+                    show: true,
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: dateArr,
+                    axisLabel: {
+                        textStyle: {
+                            fontSize: 12,
+                        }
+                    },
+                },
+                yAxis: {
+                    type: 'value',
+                    show: true,
+                    axisLabel: {
+                        formatter: '{value} ',
+                        textStyle: {
+                            fontSize: 9,
+                        }
+                    },
+                    min: 0,
+                    max: 0.7,
+                    interval: 0.1,
+                },
+                series: [
+                    {
+                        name: '治愈率',
+                        type: 'line',
+                        // 由于请求数据，为异步，所以此时无法获取请求数据
+                        data: cureRate,
+                        itemStyle: {
+                            normal: {
+                                color: '#31AC76',
+                                lineStyle: {
+                                    color: '#31AC76',
+                                }
+                            }
+                        }
+                    },
+                    {
+                        name: '死亡率',
+                        type: 'line',
+                        data: deadRate,
+                        itemStyle: {
+                            normal: {
+                                color: '#333333',
+                                lineStyle: {
+                                    color: '#333333',
+                                }
+                            }
+                        }
+
+                    },
+                ]
+            };
+
+
+            var mychart1 = echarts.init(document.getElementById('charts-right'))
+            mychart1.setOption(option1)
+        }, 1000);
+
+
+
+        // 最新资讯
+        // var tags = document.querySelector('.tags')
+        // var tabs = document.querySelector('.tabs')
+        // var btn = document.querySelector('.btn')
+        // var tli = btn.querySelectorAll('li')
+        // var  items = tabs.querySelectorAll('.itemm')
+
+        // console.log(items);
+        // console.log(tli);
+        // // tab栏切换
+        // for (var i = 0; i < tli.length; i++) {
+        //     tli[i].setAttribute('index', i)
+        //     tli[i].onclick = function () {
+        //         // tabs栏按钮变化
+        //         for (var i = 0; i < tli.length; i++) {
+        //             tli[i].className = ''
+        //         }
+        //         this.className = 'tabscurrent'
+        //         // 呈现相应的内容
+        //         var index = this.getAttribute('index')
+        //         console.log(index);
+               
+               
+        //         for(var i=0;i<items.length;i++) {
+        //             items[i].style.display = 'none'
+        //         }
+        //         items[index].style.display = 'block'
+        //     }
+        // }
+
+
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>
